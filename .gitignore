@@ -1,0 +1,123 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Instrumented libs
+lib-cov
+
+# Coverage
+coverage
+*.lcov
+.nyc_output
+
+# Grunt
+.grunt
+
+# Bower
+bower_components
+
+# node-waf
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependencies
+node_modules/
+jspm_packages/
+web_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# npm / yarn / pnpm
+.npm
+.eslintcache
+.stylelintcache
+.yarn-integrity
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# REPL history
+.node_repl_history
+
+# npm pack output
+*.tgz
+
+# dotenv files
+.env
+.env.*        # ignore all env files
+!.env.example # but keep an example
+
+# Parcel / Vite / Snowpack
+.cache
+.parcel-cache
+.vite/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Next.js / Nuxt.js / Gatsby / Vuepress / SvelteKit / Docusaurus
+.next
+out
+.nuxt
+dist
+.output
+.cache/
+.vuepress/dist
+.temp
+.svelte-kit/
+**/.vitepress/dist
+**/.vitepress/cache
+.docusaurus
+
+# Serverless / Firebase / DynamoDB / FuseBox
+.serverless/
+.firebase/
+.dynamodb/
+.fusebox/
+
+# IDE / Editor settings
+.vscode/
+.vscode-test
+.idea/
+*.swp
+*.swo
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Build / Production (React, Express build outputs)
+build/
+public/build/
+frontend/build/
+backend/build/
+
+# MongoDB local database files
+/data/db/
+*.mongod.lock
+mongod.lock
+dump/
+
+# PM2 process logs
+.pm2/logs
+.pm2/pids
+.pm2/pm2.log
