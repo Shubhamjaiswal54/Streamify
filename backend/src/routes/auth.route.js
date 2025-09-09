@@ -12,4 +12,7 @@ router.post("/logout", logout);
 
 router.post("/onboard" ,authRoute , onboard);
 
+router.get("/me" ,authRoute , (req , res) => {
+    return res.status(200).json({sucess : true , user : req.user });
+})
 export default router;

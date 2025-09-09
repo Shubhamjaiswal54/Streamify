@@ -2,37 +2,37 @@ import { upsertStreamUser } from "../lib/stream.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
-
 export async function login(req, res) {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.send(400).json({ message: "All fileds are required " });
+      return res.status(400).json({ message: "All fields are required" });
     }
+
     const user = await User.findOne({ email });
     if (!user)
-      return res.status(400).json({ message: "invalid email or password " });
+      return res.status(400).json({ message: "Invalid email or password" });
 
     const isPasswordCorrect = await user.matchPassword(password);
     if (!isPasswordCorrect)
-      return res.status(400).json({ message: "invalid email or password" });
+      return res.status(400).json({ message: "Invalid email or password" });
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
 
     res.cookie("jwt", token, {
-      maxAge: 7 * 24 * 60 * 1000,
-      htttpOnly: true,
-      samesite: "strict",
+      httpOnly: true,
+      sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    return res.status(200).json({ sucess: true, message: "login Sucessful" });
+    return res.status(200).json({ success: true, message: "Login successful" });
   } catch (error) {
-    console.log("error in login controller ", error);
-    return res.status(400).json({ message: "internal server error" });
+    console.log("error in login controller", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
 
@@ -105,7 +105,8 @@ export async function onboard(req, res) {
   try {
     const userId = req.user._id;
 
-    const { fullName, bio, nativeLanguage, location, learningLanguage } = req.body;
+    const { fullName, bio, nativeLanguage, location, learningLanguage } =
+      req.body;
 
     if (
       !fullName ||
@@ -114,7 +115,7 @@ export async function onboard(req, res) {
       !location ||
       !learningLanguage
     ) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "all field are required",
 
         missingFields: [
@@ -136,7 +137,17 @@ export async function onboard(req, res) {
     );
 
     if (!updatedUser) {
-      res.status(404).json({ message: "user not found" });
+      return res.status(404).json({ message: "user not found" });
+    }
+
+    try {
+      await upsertStreamUser({
+        id: updatedUser._id.toString(),
+        name: updatedUser.fullName,
+        image: updatedUser.profilePic || " ",
+      });
+    } catch (error) {
+      console.log("error updatig stream user during onboarding", error);
     }
 
     return res.status(200).json({ sucess: true, user: updatedUser });

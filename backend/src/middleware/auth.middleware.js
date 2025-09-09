@@ -10,7 +10,7 @@ export const authRoute = async (req, res, next) => {
         .status(401)
         .json({ message: "Unauthorized - no token provided" });
     }
-
+    console.log("COMPLETE ALL THE THINGS");
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     if (!decoded) {
@@ -23,7 +23,6 @@ export const authRoute = async (req, res, next) => {
     }
     req.user = user;
     next();
-
   } catch (error) {
     console.log("error in auth middleware", error);
   }
