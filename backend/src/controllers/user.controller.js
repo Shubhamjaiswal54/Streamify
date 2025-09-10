@@ -1,4 +1,4 @@
-import FriendRequest from "../lib/FriendRequest";
+import FriendRequest from "../models/FriendRequest";
 import User from "../models/User";
 
 export async function getRecommendedUsers(req, res) {
